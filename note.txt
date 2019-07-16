@@ -1,0 +1,28 @@
+
+
+实箭泛化虚实现
+虚线依赖实关联
+空菱聚合实组合
+项目沟通图常见
+
+spring-boot 文档
+https://docs.spring.io/spring-boot/docs/2.0.0.RC1/reference/htmlsingle/#boot-features-connect-to-production-database
+
+
+   使用boot连接数据库
+   1.在application.properties中设置所需的数据库的配置
+   eg：
+      spring.datasource.url = jdbc：mysql：// localhost / test
+      spring.datasource.username = wyj
+      spring.datasource.password = 123456
+      dbpass spring.datasource.driver-class-name = org.h2.Driver
+    2.导入相应的数据库的依赖（在pom.xml）
+       mysql数据库：    <dependency>
+                            <groupId>mysql</groupId>
+                            <artifactId>mysql-connector-java</artifactId>
+                        </dependency>
+     3.导入jdbc依赖
+                   <dependency>
+                       <groupId>org.springframework.boot</groupId>
+                       <artifactId>spring-boot-starter-jdbc</artifactId>
+                   </dependency>
