@@ -11,7 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 @Controller
@@ -21,7 +23,7 @@ public class AuthorizeController implements UserMapper{
     private GithubProvider githubProvider;
     @Autowired
     private UserMapper userMapper;
-    private  static int num=3;
+    private  static int num=1;
 
     @Value("${github.client_id}")
     private String client_id;
@@ -36,7 +38,8 @@ public class AuthorizeController implements UserMapper{
     //@RequestParam()    接收网页传递的参数
     public String callback(@RequestParam(name = "code") String code,
                            @RequestParam(name = "state" ) String state,
-                           HttpServletRequest request){
+                           HttpServletRequest request,
+                           HttpServletResponse response){
 
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setClient_id(client_id);
@@ -50,15 +53,17 @@ public class AuthorizeController implements UserMapper{
 
         if(githubUser != null){
             //登录成功
+            String token = UUID.randomUUID().toString();
            User user = new User();
            user.setId(num);
-           user.setToken(UUID.randomUUID().toString());
+           user.setToken(token);
            user.setName(githubUser.getName());
            user.setAccount_id(String.valueOf(githubUser.getId()));
            user.setGmt_create(System.currentTimeMillis());
            user.setGmt_modified(user.getGmt_create());
-            userMapper.insert(user);
-            request.getSession().setAttribute("user",githubUser);
+           userMapper.insert(user);
+            num++;
+           response.addCookie(new Cookie("token",token));
 
             return "redirect:/index";   //redirect  显示的一个路径 所以要加上/index 才能表示主页
         }else{
@@ -70,6 +75,11 @@ public class AuthorizeController implements UserMapper{
 
     @Override
     public void insert(User user) {
-
     }
+    @Override
+    public User findToken(String token) {
+        return null;
+    }
+
+
 }
