@@ -1,23 +1,27 @@
 package com.boot.example.demo.Controller;
 
+import com.boot.example.demo.Mapper.UserMapper;
+import com.boot.example.demo.model.User;
 import com.boot.example.demo.dto.AccessTokenDTO;
 import com.boot.example.demo.dto.GithubUser;
 import com.boot.example.demo.provider.GithubProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.UUID;
 
 @Controller
-public class AuthorizeController {
+public class AuthorizeController implements UserMapper{
 
     @Autowired
-
     private GithubProvider githubProvider;
+    @Autowired
+    private UserMapper userMapper;
+    private  static int num=3;
 
     @Value("${github.client_id}")
     private String client_id;
@@ -42,20 +46,30 @@ public class AuthorizeController {
         accessTokenDTO.setState(state);
 
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);  //利用githubProvider方法来获取token
-        GithubUser user = githubProvider.getUser(accessToken);    //利用token 来获取其中的值
+        GithubUser githubUser = githubProvider.getUser(accessToken);    //利用token 来获取其中的值
 
-        if(user != null){
+        if(githubUser != null){
             //登录成功
-            request.getSession().setAttribute("user",user);
+           User user = new User();
+           user.setId(num);
+           user.setToken(UUID.randomUUID().toString());
+           user.setName(githubUser.getName());
+           user.setAccount_id(String.valueOf(githubUser.getId()));
+           user.setGmt_create(System.currentTimeMillis());
+           user.setGmt_modified(user.getGmt_create());
+            userMapper.insert(user);
+            request.getSession().setAttribute("user",githubUser);
 
             return "redirect:/index";   //redirect  显示的一个路径 所以要加上/index 才能表示主页
         }else{
             //登录失败
 
-
             return "redirect:/index";
         }
     }
 
+    @Override
+    public void insert(User user) {
 
+    }
 }
