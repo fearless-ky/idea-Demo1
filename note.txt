@@ -26,3 +26,14 @@ https://docs.spring.io/spring-boot/docs/2.0.0.RC1/reference/htmlsingle/#boot-fea
                        <groupId>org.springframework.boot</groupId>
                        <artifactId>spring-boot-starter-jdbc</artifactId>
                    </dependency>
+
+
+    执行流程
+    1.先由DemoApplication运行服务器
+    2.在地址栏输入http://localhost:8887/index
+    3.spring去寻找@Controller-@GetMapping("/index")然后跳转到index.html页面
+    4.在index。html页面的登录标签连接到Github的我的账户访问成功之后根据回调地址回到AuthorizeController.java
+    5.在AuthorizeController.java中利用得到的code和state封装到实体类AccessTokenDTO
+    6.之后利用GihubProvider里的getAccessToken方法得到token
+    7.利用token得到用户名
+    8.判断是否得到用户名 得到登录成功 注入实体类User里 利用UserMapper接口注入到数据库
