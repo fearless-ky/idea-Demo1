@@ -47,6 +47,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+      <!--mysql-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.16</version>
+        </dependency>
 
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
@@ -60,13 +66,13 @@
             <version>1.2.56</version>
         </dependency>
 
-        <dependency>
+     <!--   <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>1.4.199</version>
-            <scope>test</scope>
-        </dependency>
+        </dependency>-->
 
+           <!--可以将程序打包成一个可执行的jar-->
     </dependencies>
 
     <build>
