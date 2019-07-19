@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -23,7 +24,6 @@ public class AuthorizeController implements UserMapper{
     private GithubProvider githubProvider;
     @Autowired
     private UserMapper userMapper;
-    private  static int num=1;
 
     @Value("${github.client_id}")
     private String client_id;
@@ -50,10 +50,14 @@ public class AuthorizeController implements UserMapper{
 
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);  //利用githubProvider方法来获取token
         GithubUser githubUser = githubProvider.getUser(accessToken);    //利用token 来获取其中的值
+        List<User> numAll = userMapper.searchAll();                     //查询数据库中有多少条数据
+        System.out.println("num = " + numAll.size());
 
         if(githubUser != null){
             //登录成功
             String token = UUID.randomUUID().toString();
+            int num = numAll.size();
+            num++;
            User user = new User();
            user.setId(num);
            user.setToken(token);
@@ -62,7 +66,6 @@ public class AuthorizeController implements UserMapper{
            user.setGmt_create(System.currentTimeMillis());
            user.setGmt_modified(user.getGmt_create());
            userMapper.insert(user);
-            num++;
            response.addCookie(new Cookie("token",token));
 
             return "redirect:/index";   //redirect  显示的一个路径 所以要加上/index 才能表示主页
@@ -78,6 +81,11 @@ public class AuthorizeController implements UserMapper{
     }
     @Override
     public User findToken(String token) {
+        return null;
+    }
+
+    @Override
+    public List<User> searchAll() {
         return null;
     }
 

@@ -7,6 +7,8 @@ import com.boot.example.demo.model.User;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 
 @Mapper
 public interface UserMapper {
@@ -19,4 +21,6 @@ public interface UserMapper {
     @Select("select * from user where token = #{token}")
     User findToken(@Param("token") String token);
 
+    @Select("select * from user")
+    List<User> searchAll();
 }

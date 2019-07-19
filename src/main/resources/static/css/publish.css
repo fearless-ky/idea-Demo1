@@ -1,0 +1,29 @@
+.aw-side-left{
+    background-color: white;
+}
+.aw-side-right {
+    background-color: white;
+    margin-left: -1px;
+    padding-top: 20px;
+    border-left: 1px solid #e6e6e6;
+}
+.aw-side-right .aw-mod:first-child {
+    padding-top: 0px;
+    border-top: none;
+}
+.aw-side-right .aw-mod .mod-head {
+    padding-bottom: 5px;
+}
+.aw-side-right .aw-mod .mod-body p{
+    padding: 10px 0;
+    color: #999;
+}
+b, strong {
+    font-weight: 700;
+}
+.aw-side-bar .aw-mod p {
+    margin-bottom: 0;
+}
+p {
+    margin: 0 0 10px;
+}

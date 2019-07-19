@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 
 @Controller
@@ -52,5 +53,9 @@ public class IndexController implements UserMapper{
     return null;
   }
 
+  @Override
+  public List<User> searchAll() {
+    return null;
+  }
 
 }

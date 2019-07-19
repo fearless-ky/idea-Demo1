@@ -37,3 +37,7 @@ https://docs.spring.io/spring-boot/docs/2.0.0.RC1/reference/htmlsingle/#boot-fea
     6.之后利用GihubProvider里的getAccessToken方法得到token
     7.利用token得到用户名
     8.判断是否得到用户名 得到登录成功 注入实体类User里 利用UserMapper接口注入到数据库
+
+
+
+    method=get  渲染页面    post执行请求

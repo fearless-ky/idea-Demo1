@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <title>中文社区</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/publish.css">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>-->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+<body style=" background-color: #e3e3e3">
+<nav class="navbar navbar-default navbar-inverse">
+    <div class="container-fluid">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">篮球社区</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">搜索</button>
+            </form>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">发现<span class="sr-only">(current)</span></a></li>
+                <li><a href="#">分享</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+
+            <ul class="nav navbar-nav navbar-right">
+
+                <li class="dropdown" th:if="${session.user != null}">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+
+                        <span th:text="${session.user.getName()}"></span>
+                        <span class="caret"></span></a>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="#">个人中心</a></li>
+                        <li><a href="#">我的消息</a></li>
+                        <li><a href="#">退出登录</a></li>
+
+                    </ul>
+                </li>
+                <li th:unless="not ${session.user == null}">
+                    <a href="https://github.com/login/oauth/authorize?client_id=6f6b8d6fb7223bc93b50&redirect_uri=http://localhost:8887/back&scope=user&state=1">
+                        登录
+                    </a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid"style="margin: 40px;">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 aw-side-left" >
+            <h3><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>发起</h3>
+            <hr>
+            <form action="/publish" method="post">
+                <div class="form-group" style="width: 500px; display: inline-block;">
+                    <label for="title">问题标题 (简明扼要):</label>
+                    <input type="text" class="form-control" id="title" name="title" placeholder="问题标题">
+                </div>
+
+                <!-- Single button -->
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        选择分类 <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">欧文</a></li>
+                        <li><a href="#">杜兰特</a></li>
+                        <li><a href="#">库里</a></li>
+                    </ul>
+                </div>
+
+                <div class="form-group" >
+                    <label for="description" style="display: block;">问题补充(必填,请参照右侧提示)</label>
+                    <textarea name="description" rows="5" cols="110" id="description" ></textarea>
+                </div>
+
+                <a class="btn btn-default" href="#" role="button">上传附件</a>
+
+                <div class="form-group">
+                    <label for="title" style="display: block;">添加标签:</label>
+                    <input type="text" class="form-control" id="tag" name="tag" placeholder="输入标签，以，分割" style="width: 200px; display: inline-block;">
+                    <button type="button" class="btn btn-primary">取消</button>
+                </div>
+
+                <div  class="alert alert-warning" th:if="${error == null}"  style="text-align: center">
+                    <span th:text="${error}"></span>
+                </div>
+
+                <button type="submit" class="btn btn-success"style="float: right;">发布</button>
+            </form>
+        </div>
+
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 aw-side-right">
+            <div class="aw-mod publish-help">
+                <div class="mod-head">
+                    <h3>问题发起指南：</h3>
+                </div>
+                <div class="mod-body">
+                    <p>
+                        <b>.问题标题：</b>
+                        "请用"
+                        <b style="color: red">精简</b>
+                        "的语言描述您发布的问题，不超过25字"
+                    </p>
+                    <p>
+                        <b>.问题补充：</b>
+                        "详细补充您的问题内容，并确保描述清晰直观，并提供一些相关的资料：                   "
+                    </p>
+                    <li>球队历史</li>
+                    <li>球员数据</li>
+                    <li>球员所在球队</li>
+                    <li>欧文</li>
+                    <li>杜兰特</li>
+                    <li>库里</li>
+                    <p></p>
+                    <p>
+                        <b>.选择标签：</b>
+                        "选择一个或者多个合适的标签，不超过"
+                        <b style="color: red">10</b>
+                        "个字"
+                    </p>
+
+
+
+
+                </div>
+
+
+
+
+            </div>
+    </div>
+</div>
+</div>
+
+</body>
+</html>
