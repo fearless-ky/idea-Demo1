@@ -28,7 +28,8 @@ public class IndexController implements UserMapper{
   @GetMapping("/index")
   public String zhuye(HttpServletRequest request){   //定义一个request来获取
 
-    Cookie[] cookies = request.getCookies();      //从网页中得到cookies存入到Cookie数组
+    Cookie[] cookies = request.getCookies();//从网页中得到cookies存入到Cookie数组
+    if(cookies != null && cookies.length != 0)
     for(Cookie cookie:cookies)                    //循环Cookie
     {
       if(cookie.getName().equals("token"))        //判断是否有名字是token的

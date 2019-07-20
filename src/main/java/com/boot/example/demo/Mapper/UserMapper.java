@@ -13,8 +13,8 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
-    @Insert("insert into user (id,name,account,token,gmtcreate,gmtmodified) values " +
-            "(#{id},#{name},#{account_id},#{token},#{gmt_create},#{gmt_modified})")
+    @Insert("insert into user (id,name,account,token,gmtcreate,gmtmodified,avatar_url) values " +
+            "(#{id},#{name},#{account_id},#{token},#{gmt_create},#{gmt_modified},#{avatarUrl})")
      void insert(User user);
 
 

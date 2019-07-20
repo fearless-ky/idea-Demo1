@@ -30,13 +30,34 @@ public class PublishController {
     }
     @PostMapping("/publish")
     public String dopublish(
-            @RequestParam("title") String title,     //用RequestParam来得到网页传过来的title的值 放入定义的title中
-            @RequestParam("description") String description,   //和request.getParameter("title");一样的 得到数据
-            @RequestParam("tag") String tag,
+            @RequestParam(value = "title",required = false) String title,     //用RequestParam来得到网页传过来的title的值 放入定义的title中
+            @RequestParam(value = "description",required = false) String description,   //和request.getParameter("title");一样的 得到数据
+            @RequestParam(value = "tag",required = false) String tag,
             HttpServletRequest request,
             Model model){
+        model.addAttribute("title",title);
+        model.addAttribute("description",description);
+        model.addAttribute("tag",tag);
             User user = null;
-        Cookie[] cookies = request.getCookies();      //从网页中得到cookies存入到Cookie数组
+
+            if(title == null ||title =="")
+            {
+                model.addAttribute("error","标题不能为空");
+                return "publish";
+            }
+        if(description == null ||description =="")
+        {
+            model.addAttribute("error","问题补充不能为空");
+            return "publish";
+        }
+        if(tag == null ||tag =="")
+        {
+            model.addAttribute("error","标签不能为空");
+            return "publish";
+        }
+
+        Cookie[] cookies = request.getCookies();//从网页中得到cookies存入到Cookie数组
+        if(cookies != null && cookies.length != 0)
         for(Cookie cookie:cookies)                    //循环Cookie
         {
             if(cookie.getName().equals("token"))        //判断是否有名字是token的

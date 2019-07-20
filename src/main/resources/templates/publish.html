@@ -82,7 +82,7 @@
             <form action="/publish" method="post">
                 <div class="form-group" style="width: 500px; display: inline-block;">
                     <label for="title">问题标题 (简明扼要):</label>
-                    <input type="text" class="form-control" id="title" name="title" placeholder="问题标题">
+                    <input type="text" class="form-control" id="title" name="title" th:value="${title}" placeholder="问题标题">
                 </div>
 
                 <!-- Single button -->
@@ -99,18 +99,18 @@
 
                 <div class="form-group" >
                     <label for="description" style="display: block;">问题补充(必填,请参照右侧提示)</label>
-                    <textarea name="description" rows="5" cols="110" id="description" ></textarea>
+                    <textarea name="description" rows="5" cols="110" id="description"  th:value="${description}"></textarea>
                 </div>
 
                 <a class="btn btn-default" href="#" role="button">上传附件</a>
 
                 <div class="form-group">
                     <label for="title" style="display: block;">添加标签:</label>
-                    <input type="text" class="form-control" id="tag" name="tag" placeholder="输入标签，以，分割" style="width: 200px; display: inline-block;">
+                    <input type="text" class="form-control" id="tag" name="tag" th:value="${tag}" placeholder="输入标签，以，分割" style="width: 200px; display: inline-block;">
                     <button type="button" class="btn btn-primary">取消</button>
                 </div>
 
-                <div  class="alert alert-warning" th:if="${error == null}"  style="text-align: center">
+                <div  class="alert alert-warning" th:if="${error != null}" th:text="${error}"  style="text-align: center">
                     <span th:text="${error}"></span>
                 </div>
 
@@ -153,12 +153,9 @@
 
                 </div>
 
-
-
-
             </div>
+        </div>
     </div>
-</div>
 </div>
 
 </body>

@@ -8,6 +8,7 @@ import com.boot.example.demo.provider.GithubProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -41,7 +42,7 @@ public class AuthorizeController implements UserMapper{
                            HttpServletRequest request,
                            HttpServletResponse response){
 
-        AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
+        AccessTokenDTO accessTokenDTO = new AccessTokenDTO();  //把网页返回来的code和state和固定的id、secret、uri 封装到实体类
         accessTokenDTO.setClient_id(client_id);
         accessTokenDTO.setClient_secret(client_secret);
         accessTokenDTO.setCode(code);
@@ -51,7 +52,6 @@ public class AuthorizeController implements UserMapper{
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);  //利用githubProvider方法来获取token
         GithubUser githubUser = githubProvider.getUser(accessToken);    //利用token 来获取其中的值
         List<User> numAll = userMapper.searchAll();                     //查询数据库中有多少条数据
-        System.out.println("num = " + numAll.size());
 
         if(githubUser != null){
             //登录成功
@@ -65,9 +65,9 @@ public class AuthorizeController implements UserMapper{
            user.setAccount_id(String.valueOf(githubUser.getId()));
            user.setGmt_create(System.currentTimeMillis());
            user.setGmt_modified(user.getGmt_create());
+           user.setAvatarUrl(githubUser.getAvatar_url());
            userMapper.insert(user);
            response.addCookie(new Cookie("token",token));
-
             return "redirect:/index";   //redirect  显示的一个路径 所以要加上/index 才能表示主页
         }else{
             //登录失败
