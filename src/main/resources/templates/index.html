@@ -5,6 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/index.css">
    <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>-->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js" type="application/javascript"></script>
@@ -54,7 +55,7 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown" th:if="${session.user != null}">
-                    <a href="/publish" style="color: white;font-size: 24px;font-family: Bahnschrift">发布&nbsp;&nbsp;&nbsp;</a>
+                    <a href="/publish" style="color: white;font-size: 20px;font-family: Bahnschrift">发布&nbsp;&nbsp;&nbsp;</a>
                 </li>
                 <li class="dropdown" th:if="${session.user != null}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -76,14 +77,59 @@
         </div>
     </div>
 </nav>
+
+
 <div class="container-fluid"style="margin: 40px;">
     <div class="row">
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 aw-side-left" >
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" >
+            <h2 class="glyphicon glyphicon-list" aria-hidden="true">发布</h2>
+            <hr>
+            <div class="media" th:each="question:${pageactionDTO.questionDTOS}">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" th:src="${question.user.avatar_url}">
+                    </a>
+                </div>
+
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        <a href="#" style="font-size: 14px;" th:text="${question.description}"></a>
+                        </h4>
+                    <p>
+                        .
+                        <a href="#" class="aw-user-name" th:text="${question.user.name}"></a>
+                        <span class=" btext-color-999">&nbsp;发布了文章</span>
+                        <span class=" btext-color-999" th:text="${question.comment_count} + 个评论."></span>
+                        <span class=" btext-color-999" th:text="${question.view_count} + 次浏览."></span>
+                        <span class=" btext-color-999" th:text="${question.like_count} + 次关注."></span>
+                        <span class=" btext-color-999" th:text="${#dates.format(question.gmt_create,'yyyy MMMM dd')} + 发布"></span>
+
+                    </p>
+                </div>
+                <hr>
+            </div>
 
 
+            <nav aria-label="Page navigation" class="page">
+                <ul class="pagination">
+                    <li>
+                        <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>      <!-- 就是说传到类里面的pageactionDTO.page 和 当前所显示的page相等 就‘active’-->
+                    <li th:each="page : ${pageactionDTO.pages}"  th:class="${pageactionDTO.page == page}? 'active' : ''">
+                        <a th:href="@{/index(page=${page})}" th:text="${page}" ></a>
+                    </li>
+                    <li>
+                        <a href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
 
-        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 aw-side-right">
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <h3>热门话题</h3>
 
         </div>

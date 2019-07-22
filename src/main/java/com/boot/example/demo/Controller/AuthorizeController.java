@@ -63,9 +63,9 @@ public class AuthorizeController implements UserMapper{
            user.setToken(token);
            user.setName(githubUser.getName());
            user.setAccount_id(String.valueOf(githubUser.getId()));
-           user.setGmt_create(System.currentTimeMillis());
-           user.setGmt_modified(user.getGmt_create());
-           user.setAvatarUrl(githubUser.getAvatar_url());
+           user.setGmtcreate(System.currentTimeMillis());
+           user.setGmtmodified(user.getGmtcreate());
+           user.setAvatar_url(githubUser.getAvatar_url());
            userMapper.insert(user);
            response.addCookie(new Cookie("token",token));
             return "redirect:/index";   //redirect  显示的一个路径 所以要加上/index 才能表示主页
@@ -86,6 +86,11 @@ public class AuthorizeController implements UserMapper{
 
     @Override
     public List<User> searchAll() {
+        return null;
+    }
+
+    @Override
+    public User findByID(Integer id) {
         return null;
     }
 

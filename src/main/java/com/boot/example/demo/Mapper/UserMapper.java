@@ -14,7 +14,7 @@ import java.util.List;
 public interface UserMapper {
 
     @Insert("insert into user (id,name,account,token,gmtcreate,gmtmodified,avatar_url) values " +
-            "(#{id},#{name},#{account_id},#{token},#{gmt_create},#{gmt_modified},#{avatarUrl})")
+            "(#{id},#{name},#{account_id},#{token},#{gmtcreate},#{gmtmodified},#{avatar_url})")
      void insert(User user);
 
 
@@ -23,4 +23,8 @@ public interface UserMapper {
 
     @Select("select * from user")
     List<User> searchAll();
+
+    @Select("select * from user where id = #{id}")
+    User findByID(@Param("id") Integer id);
+
 }

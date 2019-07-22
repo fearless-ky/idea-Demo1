@@ -1,6 +1,8 @@
-package com.boot.example.demo.model;
+package com.boot.example.demo.dto;
 
-public class Question {
+import com.boot.example.demo.model.User;
+
+public class QuestionDTO {
     private Integer id;
     private String title;
     private String description;
@@ -11,6 +13,7 @@ public class Question {
     private Integer comment_count;
     private Integer view_count;
     private Integer like_count;
+    private User user;
 
     public Integer getId() {
         return id;
@@ -90,5 +93,13 @@ public class Question {
 
     public void setLike_count(Integer like_count) {
         this.like_count = like_count;
+    }
+
+    public com.boot.example.demo.model.User getUser() {
+        return user;
+    }
+
+    public void setUser(com.boot.example.demo.model.User user) {
+        this.user = user;
     }
 }

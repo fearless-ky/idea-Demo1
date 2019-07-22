@@ -1,7 +1,10 @@
 package com.boot.example.demo.Controller;
 
 import com.boot.example.demo.Mapper.UserMapper;
+import com.boot.example.demo.dto.PageactionDTO;
+import com.boot.example.demo.dto.QuestionDTO;
 import com.boot.example.demo.model.User;
+import com.boot.example.demo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,9 +27,13 @@ public class IndexController implements UserMapper{
 
   @Autowired
   private UserMapper userMapper;
+  @Autowired
+  private QuestionService questionService;
 
   @GetMapping("/index")
-  public String zhuye(HttpServletRequest request){   //定义一个request来获取
+  public String zhuye(HttpServletRequest request, Model model,
+                      @RequestParam(name = "page",defaultValue = "1") Integer page,
+                      @RequestParam(name = "size",defaultValue = "3") Integer size){   //定义一个request来获取  如果没有参数传入   就默认值是defaultValue
 
     Cookie[] cookies = request.getCookies();//从网页中得到cookies存入到Cookie数组
     if(cookies != null && cookies.length != 0)
@@ -43,6 +50,8 @@ public class IndexController implements UserMapper{
         break;
       }
     }
+      PageactionDTO pageactionDTO = questionService.list(page,size);
+      model.addAttribute("pageactionDTO",pageactionDTO);
     return "index";
   }
 
@@ -56,6 +65,11 @@ public class IndexController implements UserMapper{
 
   @Override
   public List<User> searchAll() {
+    return null;
+  }
+
+  @Override
+  public User findByID(Integer id) {
     return null;
   }
 

@@ -41,3 +41,20 @@ https://docs.spring.io/spring-boot/docs/2.0.0.RC1/reference/htmlsingle/#boot-fea
 
 
     method=get  渲染页面    post执行请求
+
+    lombok插件    的@Data注解 可以自动添加 get() set()  toString() 方法   放在每个实体类的最上面   要引入 maven依赖
+   github页面：https://api.github.com/users/fearless-ky
+
+
+
+   分页查询  就是   从客户端  获取页码....  然后利用公式（页码-1）*每页的数据，每页的数据  然后从数据库中利用这个公式来获取相应的数据来显示到客户端
+   首先要在首页显示多少页
+   1.用num=QuestionsearchAll（）方法来返回数据库里有多少条记录
+   2.num % 3   来知道   需要分多少页 然后封装到    CurrPage
+   3.在前段取出CurrPage 来显示几页
+   4.当点击下一页跳转到IndexController
+
+
+  [thymeleaf]   https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#messages
+
+

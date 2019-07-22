@@ -1,0 +1,55 @@
+body{
+    background-color: #e3e3e3;
+}
+.row{
+    position: relative;
+    top: 40px;
+}
+.col-lg-9{
+    background-color: white;
+}
+.col-lg-3{
+    background-color: white;
+}
+.col-lg-9 h2{
+    position: relative;
+    top: 16px;
+    left: 20px;
+    margin: 0;
+    font-size: 20px;
+}
+.col-lg-9 .media .media-left a img{
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+}
+.container-fluid .media{
+    margin: 0 0 5px;
+    padding-right: 20px;
+    font-size: 14px;
+    word-wrap: break-word;
+}
+.container-fluid .media .aw-user-name{
+    color: #666;
+}
+.container-fluid .media .media-body p span{
+    font-size: 12px;
+    font-weight: normal;
+    color: #999;
+}
+.media-body h4 a{
+    cursor: pointer;
+    color: #155faa;
+    text-decoration: none;
+}
+.media-body h4 a:hover{
+    border-bottom: 1px solid #155faa;   /*设置下边框的样式*/
+    color: #66b7ff;
+}
+.media-body p a{
+    font-size: 12px;
+    text-decoration: none;
+}
+.page{
+    float: right;
+}
