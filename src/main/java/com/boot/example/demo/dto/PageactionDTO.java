@@ -6,13 +6,14 @@ import java.util.List;
 public class PageactionDTO  {
 
         private List<QuestionDTO>   questionDTOS;
-        private boolean showPrevious;       //当前按钮
+        private boolean showPrevious;       //上一页
         private boolean showFirstPage;      //第一页
         private boolean showNextPage;       //下一页
         private boolean showEndPage;        //最后一页
 
         private Integer page;
         private List<Integer> pages  =  new ArrayList<>();
+        private Integer totalPage;
 
         public List<QuestionDTO> getQuestionDTOS() {
                 return questionDTOS;
@@ -70,18 +71,32 @@ public class PageactionDTO  {
                 this.pages = pages;
         }
 
+        public Integer getTotalPage() {
+                return totalPage;
+        }
+
+        public void setTotalPage(Integer totalPage) {
+                this.totalPage = totalPage;
+        }
+
         public void setPageTotal(Integer totalCount, Integer page, Integer size) {
 
-                this.page = page;
                 Integer totalpage = 0;
                 if(totalCount % size == 0){
                         totalpage = totalCount / size;
                 }else{
                         totalpage = totalCount / size +1;
                 }
-
-                pages.add(page);         // totalpage = 4  page = 3   size = 3
-                for(int i=1;i<=3;i++)
+                this.totalPage = totalpage;
+                if(page < 1){
+                        page = 1;
+                }
+                if(page > totalpage){
+                        page = totalpage;
+                }
+                this.page = page;
+                pages.add(page);         // totalpage = 4  page = 4   size = 3
+                for(int i=1;i<3;i++)
                 {
                         if(page - i > 0)                                 //就是往前插入
                         {
@@ -92,27 +107,27 @@ public class PageactionDTO  {
                                 pages.add(page+i);
                         }
                 }
-
+                System.out.println(page);
                 //是否展示上一页
-                if(page==1)                     //当页数是第一页的时候
+                if(page == 1)                     //当页数是第一页的时候
                 {
-                        showPrevious=false;    //左按钮不显示  ==false
+                        showPrevious = false;    //左按钮不显示  ==false
                 }
                 else{
-                        showEndPage=true;       //右按钮显示 ==true
+                        showPrevious = true;       //右按钮显示 ==true
                 }
                 //是否展示下一页
-                if(page==totalpage)             //当页数是最后一页的时候
+                if(page == totalpage)             //当页数是最后一页的时候
                 {
-                        showEndPage=false;      //右按钮不显示 ==false
+                        showNextPage = false;      //右按钮不显示 ==false
                 }else{
-                        showEndPage=true;     //左按钮显示  ==true
+                        showNextPage=true;     //左按钮显示  ==true
                 }
                 //是否展示第一页
                 if(pages.contains(1)){
-                        showFirstPage=false;
+                        showFirstPage = false;
                 }else{
-                        showFirstPage=true;
+                        showFirstPage = true;
                 }
                 //是否展示最后一页
                 if(pages.contains(totalpage)){

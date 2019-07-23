@@ -23,10 +23,20 @@ public class QuestionService{
     private  UserMapper userMapper;
     public PageactionDTO list(Integer page, Integer size) {
 
-        Integer offSize = (page-1)*size;
+        PageactionDTO pageactionDTO = new PageactionDTO();                   //定义一个 pageactionDTO 变量   类型是PageactionDTO
+        Integer totalCount = questionMapper.QuestionsearchAll().size();      //获取数据库中一共多少条数据
+        pageactionDTO.setPageTotal(totalCount,page,size);
+
+        if(page < 1){
+            page = 1;
+        }
+        if(page > pageactionDTO.getTotalPage()){
+            page = pageactionDTO.getTotalPage();
+        }
+
+        Integer offSize = (page-1)*size;                                     //算出起始页
         List<Question> questions = questionMapper.QuestionsearchPage(offSize,size);  //调用QuestionsearchPage()方法去得到Question里面的offSize - size的信息
         List<QuestionDTO> questionDTOList = new ArrayList<>();               //定义一个动态数组  questionDTOList  它的类型是 QuestionDTO
-        PageactionDTO pageactionDTO = new PageactionDTO();                   //定义一个 pageactionDTO 变量   类型是PageactionDTO
         for(Question question:questions)
         {
             User user =  userMapper.findByID(question.getCreator());         //用方法findByID找寻找在user表里面的id和表question里的creator相同的数据  返回给user
@@ -37,8 +47,6 @@ public class QuestionService{
         }
                 //questionDTO里面含有需要显示的所有数据
         pageactionDTO.setQuestionDTOS(questionDTOList);                      //把动态数组封装到pageactionDTO的setQuestionDTOS()
-        Integer totalCount = questionMapper.QuestionsearchAll().size();      //获取数据库中一共多少条数据
-        pageactionDTO.setPageTotal(totalCount,page,size);
 
         return pageactionDTO;
     }

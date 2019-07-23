@@ -112,19 +112,34 @@
 
             <nav aria-label="Page navigation" class="page">
                 <ul class="pagination">
-                    <li>
-                        <a href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
+                    <li th:if="${pageactionDTO.showFirstPage}">
+                        <a href="/index?page = 1" aria-label="Previous">
+                            <span aria-hidden="true">&lt;&lt;</span>
                         </a>
-                    </li>      <!-- 就是说传到类里面的pageactionDTO.page 和 当前所显示的page相等 就‘active’-->
+                    </li>
+                    <li th:if="${pageactionDTO.showPrevious}">
+                        <a th:href="@{/index(page=${pageactionDTO.page} - 1)}" aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+
+                    <!-- 就是说传到类里面的pageactionDTO.page 和 当前所显示的page相等 就‘active’-->
                     <li th:each="page : ${pageactionDTO.pages}"  th:class="${pageactionDTO.page == page}? 'active' : ''">
                         <a th:href="@{/index(page=${page})}" th:text="${page}" ></a>
                     </li>
-                    <li>
-                        <a href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
+
+                    <li th:if="${pageactionDTO.showNextPage}">
+                        <a th:href="@{/index(page=${pageactionDTO.page} + 1)}" aria-label="Previous">
+                            <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>
+                    <li th:if="${pageactionDTO.showEndPage}">
+                        <a th:href="@{/index(page=${pageactionDTO.totalPage})}" aria-label="Previous">
+                            <span aria-hidden="true">&gt;&gt;</span>
+                        </a>
+                    </li>
+
+
                 </ul>
             </nav>
         </div>
