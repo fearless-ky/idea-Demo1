@@ -35,7 +35,7 @@ public class IndexController implements UserMapper{
                       @RequestParam(name = "page",defaultValue = "1") Integer page,
                       @RequestParam(name = "size",defaultValue = "3") Integer size){   //定义一个request来获取  如果没有参数传入   就默认值是defaultValue
 
-    Cookie[] cookies = request.getCookies();//从网页中得到cookies存入到Cookie数组
+/*   Cookie[] cookies = request.getCookies();//从网页中得到cookies存入到Cookie数组
     if(cookies != null && cookies.length != 0)
     for(Cookie cookie:cookies)                    //循环Cookie
     {
@@ -49,7 +49,7 @@ public class IndexController implements UserMapper{
         }
         break;
       }
-    }
+    }*/
       PageactionDTO pageactionDTO = questionService.list(page,size);
       model.addAttribute("pageactionDTO",pageactionDTO);
     return "index";

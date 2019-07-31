@@ -38,8 +38,7 @@ public class PublishController {
         model.addAttribute("title",title);
         model.addAttribute("description",description);
         model.addAttribute("tag",tag);
-            User user = null;
-
+       /*    User user = null;*/
             if(title == null ||title =="")
             {
                 model.addAttribute("error","标题不能为空");
@@ -56,7 +55,7 @@ public class PublishController {
             return "publish";
         }
 
-        Cookie[] cookies = request.getCookies();//从网页中得到cookies存入到Cookie数组
+     /* Cookie[] cookies = request.getCookies();//从网页中得到cookies存入到Cookie数组
         if(cookies != null && cookies.length != 0)
         for(Cookie cookie:cookies)                    //循环Cookie
         {
@@ -70,7 +69,10 @@ public class PublishController {
                 }
                 break;
             }
-        }
+        }*/
+
+        User  user = (User) request.getSession().getAttribute("user");
+
         if(user == null)
         {
             model.addAttribute("error","用户信息错误");

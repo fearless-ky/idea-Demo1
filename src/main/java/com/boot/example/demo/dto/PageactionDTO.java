@@ -107,7 +107,6 @@ public class PageactionDTO  {
                                 pages.add(page+i);
                         }
                 }
-                System.out.println(page);
                 //是否展示上一页
                 if(page == 1)                     //当页数是第一页的时候
                 {

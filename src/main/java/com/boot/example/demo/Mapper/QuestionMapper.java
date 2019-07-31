@@ -1,5 +1,6 @@
 package com.boot.example.demo.Mapper;
 
+import com.boot.example.demo.dto.QuestionDTO;
 import com.boot.example.demo.model.Question;
 import com.boot.example.demo.model.User;
 import org.apache.ibatis.annotations.Insert;
@@ -22,5 +23,5 @@ public interface QuestionMapper {
         @Select("select * from question limit #{offSize},#{size}")                    //分页查询
         List<Question> QuestionsearchPage(@Param(value = "offSize") Integer offSize, @Param(value = "size") Integer size);
 
-
+        QuestionDTO getById(Integer id);
 }
