@@ -87,7 +87,7 @@
                 <h2><span th:text="${sectionName}"></span></h2>
                  <hr>
 
-            <!--<div class="media" th:each="question:${pageactionDTO.questionDTOS}">
+           <div class="media" th:each="question:${pageaction.questionDTOS}">
                      <div class="media-left">
                          <a href="#">
                              <img class="media-object" th:src="${question.user.avatar_url}">
@@ -113,38 +113,37 @@
                  </div>
 
 
-                 <nav aria-label="Page navigation" class="page">
-                     <ul class="pagination">
-                         <li th:if="${pageactionDTO.showFirstPage}">
-                             <a href="/index?page = 1" aria-label="Previous">
-                                 <span aria-hidden="true">&lt;&lt;</span>
-                             </a>
-                         </li>
-                         <li th:if="${pageactionDTO.showPrevious}">
-                             <a th:href="@{/index(page=${pageactionDTO.page} - 1)}" aria-label="Previous">
-                                 <span aria-hidden="true">&lt;</span>
-                             </a>
-                         </li>
+               <nav aria-label="Page navigation" class="page">
+                   <ul class="pagination">
+                       <li th:if="${pageaction.showFirstPage}">
+                           <a th:href="@{'/profile/' + ${section}(page=${1})}" aria-label="Previous">
+                               <span aria-hidden="true">&lt;&lt;</span>
+                           </a>
+                       </li>
+                       <li th:if="${pageaction.showPrevious}">
+                           <a th:href="@{'/profile/' + ${section}(page=${pageaction.page} - 1)}" aria-label="Previous">
+                               <span aria-hidden="true">&lt;</span>
+                           </a>
+                       </li>
 
-                         &lt;!&ndash; 就是说传到类里面的pageactionDTO.page 和 当前所显示的page相等 就‘active’&ndash;&gt;
-                         <li th:each="page : ${pageactionDTO.pages}"  th:class="${pageactionDTO.page == page}? 'active' : ''">
-                             <a th:href="@{/index(page=${page})}" th:text="${page}" ></a>
-                         </li>
+                     <!-- 就是说传到类里面的pageactionDTO.page 和 当前所显示的page相等 就‘active’-->
+                       <li th:each="page : ${pageaction.pages}"  th:class="${pageaction.page == page}? 'active' : ''">
+                           <a th:href="@{'/profile/' + ${section}(page=${page})}" th:text="${page}" ></a>
+                       </li>
 
-                         <li th:if="${pageactionDTO.showNextPage}">
-                             <a th:href="@{/index(page=${pageactionDTO.page} + 1)}" aria-label="Previous">
-                                 <span aria-hidden="true">&gt;</span>
-                             </a>
-                         </li>
-                         <li th:if="${pageactionDTO.showEndPage}">
-                             <a th:href="@{/index(page=${pageactionDTO.totalPage})}" aria-label="Previous">
-                                 <span aria-hidden="true">&gt;&gt;</span>
-                             </a>
-                         </li>
+                       <li th:if="${pageaction.showNextPage}">
+                           <a th:href="@{'/profile/' + ${section}(page=${pageaction.page} + 1)}" aria-label="Previous">
+                               <span aria-hidden="true">&gt;</span>
+                           </a>
+                       </li>
+                       <li th:if="${pageaction.showEndPage}">
+                           <a th:href="@{/profile/questions(page=${pageaction.totalPage})}" aria-label="Previous">
+                               <span aria-hidden="true">&gt;&gt;</span>
+                           </a>
+                       </li>
 
-
-                     </ul>
-                 </nav> -->
+                   </ul>
+               </nav>
 
         </div>
 

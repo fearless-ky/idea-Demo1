@@ -79,21 +79,8 @@ public class PageactionDTO  {
                 this.totalPage = totalPage;
         }
 
-        public void setPageTotal(Integer totalCount, Integer page, Integer size) {
-
-                Integer totalpage = 0;
-                if(totalCount % size == 0){
-                        totalpage = totalCount / size;
-                }else{
-                        totalpage = totalCount / size +1;
-                }
-                this.totalPage = totalpage;
-                if(page < 1){
-                        page = 1;
-                }
-                if(page > totalpage){
-                        page = totalpage;
-                }
+        public void setPageTotal(Integer totalPage, Integer page) {
+                this.totalPage = totalPage;
                 this.page = page;
                 pages.add(page);         // totalpage = 4  page = 4   size = 3
                 for(int i=1;i<3;i++)
@@ -102,7 +89,7 @@ public class PageactionDTO  {
                         {
                                 pages.add(0,page-i);    //    1 2 3
                         }
-                        if(page + i <= totalpage)                       //往后插入
+                        if(page + i <= totalPage)                       //往后插入
                         {
                                 pages.add(page+i);
                         }
@@ -116,7 +103,7 @@ public class PageactionDTO  {
                         showPrevious = true;       //右按钮显示 ==true
                 }
                 //是否展示下一页
-                if(page == totalpage)             //当页数是最后一页的时候
+                if(page == totalPage)             //当页数是最后一页的时候
                 {
                         showNextPage = false;      //右按钮不显示 ==false
                 }else{
@@ -129,7 +116,7 @@ public class PageactionDTO  {
                         showFirstPage = true;
                 }
                 //是否展示最后一页
-                if(pages.contains(totalpage)){
+                if(pages.contains(totalPage)){
                         showEndPage=false;
                 }else{
                         showEndPage=true;

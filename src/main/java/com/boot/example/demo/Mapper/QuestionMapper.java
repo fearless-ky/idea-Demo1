@@ -1,8 +1,6 @@
 package com.boot.example.demo.Mapper;
 
-import com.boot.example.demo.dto.QuestionDTO;
 import com.boot.example.demo.model.Question;
-import com.boot.example.demo.model.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -23,5 +21,12 @@ public interface QuestionMapper {
         @Select("select * from question limit #{offSize},#{size}")                    //分页查询
         List<Question> QuestionsearchPage(@Param(value = "offSize") Integer offSize, @Param(value = "size") Integer size);
 
-        QuestionDTO getById(Integer id);
+        @Select("select * from question where id = #{id}")
+        Question getById(@Param(value = "id") Integer id);
+
+        @Select("select * from question where creator = #{userId} limit #{offSize},#{size}")
+        List<Question> QuestionsearchIdPage(@Param(value = "userId") Integer userId,@Param(value = "offSize") Integer offSize, @Param(value = "size") Integer size);
+
+        @Select("select count(1) from question where creator = #{userId}")
+        Integer countByUserId(@Param(value = "userId")Integer userId);
 }

@@ -1,7 +1,5 @@
 package com.boot.example.demo.dto;
-
 import com.boot.example.demo.model.User;
-
 public class QuestionDTO {
     private Integer id;
     private String title;

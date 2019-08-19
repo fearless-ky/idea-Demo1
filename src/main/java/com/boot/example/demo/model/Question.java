@@ -1,5 +1,6 @@
 package com.boot.example.demo.model;
 
+
 public class Question {
     private Integer id;
     private String title;

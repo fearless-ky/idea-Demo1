@@ -35,10 +35,8 @@ public class ThemeInterceptor implements HandlerInterceptor {
                     break;
                 }
             }
-
         return true;
     }
-
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable ModelAndView modelAndView) throws Exception {
     }

@@ -55,22 +55,6 @@ public class PublishController {
             return "publish";
         }
 
-     /* Cookie[] cookies = request.getCookies();//从网页中得到cookies存入到Cookie数组
-        if(cookies != null && cookies.length != 0)
-        for(Cookie cookie:cookies)                    //循环Cookie
-        {
-            if(cookie.getName().equals("token"))        //判断是否有名字是token的
-            {
-                String token = cookie.getName();          //如果有定义一个token   来获取这个token的名字
-                 user = userMapper.findToken(cookie.getValue()); //调用UserMapper中的findToken()方法来判断数据库中是否有token值和cookie.getValue相同
-                if(user != null)
-                {
-                    request.getSession().setAttribute("user",user);
-                }
-                break;
-            }
-        }*/
-
         User  user = (User) request.getSession().getAttribute("user");
 
         if(user == null)

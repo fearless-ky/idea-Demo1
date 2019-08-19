@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
-public class AuthorizeController implements UserMapper{
+public class AuthorizeController{
 
     @Autowired
     private GithubProvider githubProvider;
@@ -74,24 +74,6 @@ public class AuthorizeController implements UserMapper{
 
             return "redirect:/index";
         }
-    }
-
-    @Override
-    public void insert(User user) {
-    }
-    @Override
-    public User findToken(String token) {
-        return null;
-    }
-
-    @Override
-    public List<User> searchAll() {
-        return null;
-    }
-
-    @Override
-    public User findByID(Integer id) {
-        return null;
     }
 
 

@@ -59,6 +59,24 @@
    7.返回pageactionDTO 到 IndexController  封装到pageactionDTO  返回到前段  index.html
 
 
+   @RequestBody：主要用于json数据的传递
+   @RequestParam：GET和POST请求传的参数会自动转换赋值到@RequestParam 所注解的变量上
+   @RequestParam(value = "username") String username,@RequestParam(value = "password") String password,
 
+       7-29
+      [thymeleaf]  Including template fragments   可以作用于多个页面使用同一个布局
+
+      @PathVariable("xxx")
+      通过 @PathVariable 可以将URL中占位符参数{xxx}绑定到处理器类的方法形参中@PathVariable(“xxx“)
+        @RequestMapping("show5/{id}/{name}")
+          public ModelAndView test5(@PathVariable("id") Long ids ,@PathVariable("name") String names){
+              ModelAndView mv = new ModelAndView();
+               mv.addObject("msg","占位符映射：id:"+ids+";name:"+names);
+                mv.setViewName("hello2");
+                return mv;
+
+
+
+  ctrl + alt + v    抽取一个变量
 
 

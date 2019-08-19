@@ -15,13 +15,15 @@ public class WebConfig implements WebMvcConfigurer {
     private  ThemeInterceptor themeInterceptor;
 
 
+    /**
+     *    addPathPatterns 增加哪些是需要拦截的
+     *    excludePathPatterns  哪些是不需要拦截的
+     * @param registry
+     */
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(themeInterceptor).addPathPatterns("/**");
     }
-/*
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
-    }*/
 }

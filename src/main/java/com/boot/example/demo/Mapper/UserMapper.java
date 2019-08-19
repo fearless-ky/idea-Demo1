@@ -1,6 +1,7 @@
 package com.boot.example.demo.Mapper;
 
 
+import com.boot.example.demo.dto.QuestionDTO;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import com.boot.example.demo.model.User;
@@ -26,5 +27,6 @@ public interface UserMapper {
 
     @Select("select * from user where id = #{id}")
     User findByID(@Param("id") Integer id);
-
+    @Select("select * from user ")
+    List<QuestionDTO> findByIDCookie();
 }

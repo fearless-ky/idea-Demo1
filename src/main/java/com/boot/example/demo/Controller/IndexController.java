@@ -2,8 +2,6 @@ package com.boot.example.demo.Controller;
 
 import com.boot.example.demo.Mapper.UserMapper;
 import com.boot.example.demo.dto.PageactionDTO;
-import com.boot.example.demo.dto.QuestionDTO;
-import com.boot.example.demo.model.User;
 import com.boot.example.demo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,11 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-
 
 @Controller
-public class IndexController implements UserMapper{
+public class IndexController{
 
   @GetMapping("/hello")
     public String hello(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
@@ -50,27 +46,10 @@ public class IndexController implements UserMapper{
         break;
       }
     }*/
+
+      Cookie[] cookies = request.getCookies();
       PageactionDTO pageactionDTO = questionService.list(page,size);
       model.addAttribute("pageactionDTO",pageactionDTO);
-    return "index";
+      return "index";
   }
-
-  @Override
-  public void insert(User user) {
-  }
-  @Override
-  public User findToken(String token) {
-    return null;
-  }
-
-  @Override
-  public List<User> searchAll() {
-    return null;
-  }
-
-  @Override
-  public User findByID(Integer id) {
-    return null;
-  }
-
 }
