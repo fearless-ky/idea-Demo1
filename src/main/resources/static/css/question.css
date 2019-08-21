@@ -1,0 +1,8 @@
+.container-fluid .row .media-left img{
+    width: 40px;
+    height: 40px;
+}
+.container-fluid .row .media-body h6{
+ position: relative;
+    padding-top: 10px;
+}

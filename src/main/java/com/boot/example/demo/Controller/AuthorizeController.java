@@ -5,12 +5,14 @@ import com.boot.example.demo.model.User;
 import com.boot.example.demo.dto.AccessTokenDTO;
 import com.boot.example.demo.dto.GithubUser;
 import com.boot.example.demo.provider.GithubProvider;
+import com.boot.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +36,9 @@ public class AuthorizeController{
 
     @Value("${github.redirect_uri}")
     private String redirect_uri;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/back")
     //@RequestParam()    接收网页传递的参数
@@ -63,10 +68,8 @@ public class AuthorizeController{
            user.setToken(token);
            user.setName(githubUser.getName());
            user.setAccount_id(String.valueOf(githubUser.getId()));
-           user.setGmtcreate(System.currentTimeMillis());
-           user.setGmtmodified(user.getGmtcreate());
            user.setAvatar_url(githubUser.getAvatar_url());
-           userMapper.insert(user);
+           userService.CreateOrUpdate(user);
            response.addCookie(new Cookie("token",token));
             return "redirect:/index";   //redirect  显示的一个路径 所以要加上/index 才能表示主页
         }else{
@@ -76,5 +79,13 @@ public class AuthorizeController{
         }
     }
 
+    @GetMapping("/logout")   //用户点退出登录   清楚cookie  和token
+    public String logout(HttpServletRequest request,HttpServletResponse response){
+        request.getSession().removeAttribute("user");
+        Cookie cookie = new Cookie("token",null);   //清除cookie的方法是  新建一个一样名字的cookie  然后赋null
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:/index";
+    }
 
 }

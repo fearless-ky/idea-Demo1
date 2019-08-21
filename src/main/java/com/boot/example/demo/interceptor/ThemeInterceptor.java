@@ -27,6 +27,7 @@ public class ThemeInterceptor implements HandlerInterceptor {
                 if(cookie.getName().equals("token"))        //判断是否有名字是token的
                 {
                     String token = cookie.getName();          //如果有定义一个token   来获取这个token的名字
+
                     User user = userMapper.findToken(cookie.getValue()); //调用UserMapper中的findToken()方法来判断数据库中是否有token值和cookie.getValue相同
                     if(user != null)
                     {

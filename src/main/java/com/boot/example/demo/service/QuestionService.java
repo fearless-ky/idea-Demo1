@@ -60,6 +60,8 @@ public class QuestionService{
         Question question = questionMapper.getById(id);           //实现从数据库读出数据放入一个Question 变量里面封装
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question,questionDTO);           //把  questions中的对象 一个一个的复制到questionDTO里面去
+        User  user =  userMapper.findByID(question.getCreator());
+        questionDTO.setUser(user);
         return questionDTO;
     }
 
@@ -97,5 +99,22 @@ public class QuestionService{
         //questionDTO里面含有需要显示的所有数据
         pageactionDTO.setQuestionDTOS(questionDTOList);                      //把动态数组封装到pageactionDTO的setQuestionDTOS()
         return pageactionDTO;
+    }
+
+    public void CreateOrUpdate(Question question) {
+
+        if(question.getId() == null)
+        {
+            //插入
+            question.setGmt_create(System.currentTimeMillis());
+            question.setGmt_modified(question.getGmt_create());
+            questionMapper.create(question);
+        }else {
+            //更新
+            question.setGmt_modified(System.currentTimeMillis());
+            questionMapper.update(question);
+        }
+
+
     }
 }
