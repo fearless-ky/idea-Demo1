@@ -19,7 +19,7 @@
       dbpass spring.datasource.driver-class-name = org.h2.Driver
     2.导入相应的数据库的依赖（在pom.xml）
        mysql数据库：    <dependency>
-                            <groupId>mysql</groupId>
+                            <groupId>mysql</groupId>。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。、、、、、、、、
                             <artifactId>mysql-connector-java</artifactId>
                         </dependency>
      3.导入jdbc依赖
@@ -78,5 +78,13 @@
 
 
   ctrl + alt + v    抽取一个变量
+
+    <input type = "hidden" name = "id" th:value="${id}">  <!--hidden的作用就是不显示在前段 但是可以用来传值.-->
+
+    您可以使用标准Maven命令行属性将参数传递给目标。例如：
+    mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
+
+    更新阅读数的时候回有一个问题就是当很多个用户同时访问这个页面的时候  每个用户都是获取了当前的数据库的阅读数来加1
+    应该用数据库自己的字段view_count 来自加1           sql.SET("view_count = #{view_count} + view_count");
 
 
