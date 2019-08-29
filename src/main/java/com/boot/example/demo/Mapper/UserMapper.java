@@ -24,6 +24,7 @@ public interface UserMapper {
 
     @Select("select * from user where id = #{id}")
     User findByID(@Param("id") Integer id);
+
     @Select("select * from user ")
     List<QuestionDTO> findByIDCookie();
 

@@ -4,6 +4,8 @@ import com.boot.example.demo.Mapper.QuestionMapper;
 import com.boot.example.demo.Mapper.UserMapper;
 import com.boot.example.demo.dto.PageactionDTO;
 import com.boot.example.demo.dto.QuestionDTO;
+import com.boot.example.demo.exception.CustomizeErrorCode;
+import com.boot.example.demo.exception.CustomizeException;
 import com.boot.example.demo.model.Question;
 import com.boot.example.demo.model.User;
 import org.springframework.beans.BeanUtils;
@@ -21,6 +23,7 @@ public class QuestionService{
     @Autowired
     private  UserMapper userMapper;
     public PageactionDTO list(Integer page, Integer size) { //这个statue是用来判断当没有用户登录的时候来显示全部数据
+
 
         PageactionDTO pageactionDTO = new PageactionDTO();//定义一个 pageactionDTO 变量   类型是PageactionDTO
         Integer totalpage;
@@ -48,6 +51,7 @@ public class QuestionService{
             QuestionDTO questionDTO = new QuestionDTO();                     //定义一个变量questionDTO   QuestionDTO类型的
             BeanUtils.copyProperties(question,questionDTO);                  //把  questions中的对象 一个一个的复制到questionDTO里面去
             questionDTO.setUser(user);                                       //把比较得到的user也放入questionDTO
+
             questionDTOList.add(questionDTO);                                //然后封装到动态数组questionDTOList
         }
                 //questionDTO里面含有需要显示的所有数据
@@ -56,14 +60,32 @@ public class QuestionService{
         return pageactionDTO;
     }
 
+    /**
+     *          展示用户自己所发表文章的详细内容
+     * @param id
+     * @return
+     */
     public QuestionDTO getById(Integer id) {
         Question question = questionMapper.getById(id);           //实现从数据库读出数据放入一个Question 变量里面封装
+        if(question == null)
+        {
+            //定义一个自定义的错误类
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+        }
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question,questionDTO);           //把  questions中的对象 一个一个的复制到questionDTO里面去
         User  user =  userMapper.findByID(question.getCreator());
         questionDTO.setUser(user);
         return questionDTO;
     }
+
+    /**
+     *   展示用户自己所有发表的文章
+     * @param userId
+     * @param page
+     * @param size
+     * @return
+     */
 
     public PageactionDTO listByUserId(Integer userId, Integer page, Integer size) {
 
@@ -101,6 +123,12 @@ public class QuestionService{
         return pageactionDTO;
     }
 
+
+    /**
+     * 插入或更新用户所发布的文章
+     *
+     * @param question
+     */
     public void CreateOrUpdate(Question question) {
 
         if(question.getId() == null)
@@ -112,9 +140,28 @@ public class QuestionService{
         }else {
             //更新
             question.setGmt_modified(System.currentTimeMillis());
-            questionMapper.update(question);
+            int  updated = questionMapper.updateView(question);
+            if(updated !=1)
+            {
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+            }
         }
+    }
 
+    /**
+     * 累加用户文章的阅读数
+     * @param id
+     */
+    public void incView(Integer id) {
 
+        Question updateQuestion = new Question();
+        updateQuestion.setId(id);
+        updateQuestion.setView_count(1);
+
+        int num = questionMapper.updateView(updateQuestion);
+        if(num == 1)
+        {
+            System.out.println("success!!");
+        }
     }
 }

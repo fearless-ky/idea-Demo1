@@ -22,7 +22,7 @@
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" >
             <h3><span th:text="${questions.title}"></span></h3>
 
-            <span class=" btext-color-999" th:text="'作者' + '&nbsp;' + ${questions.user.name} + '&nbsp;' + '|'"></span>
+            <span class=" btext-color-999" th:text="'作者:' + '&nbsp;' + ${questions.user.name} + '&nbsp;' + '|'"></span>
             <span class=" btext-color-999" th:text="'阅读数' +  '&nbsp;' + ${questions.view_count} + '|'"></span>
             <span class=" btext-color-999" th:text=" '发布于' + '&nbsp;' + ${#dates.format(questions.gmt_create,'yyyy-MM-dd')}"></span>
             <hr>

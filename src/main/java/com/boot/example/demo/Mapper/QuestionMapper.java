@@ -1,5 +1,6 @@
 package com.boot.example.demo.Mapper;
 
+import com.boot.example.demo.Util.Util;
 import com.boot.example.demo.model.Question;
 import org.apache.ibatis.annotations.*;
 
@@ -27,7 +28,12 @@ public interface QuestionMapper {
         @Select("select count(1) from question where creator = #{userId}")
         Integer countByUserId(@Param(value = "userId")Integer userId);
 
-        @Update("update question set title = #{title},description = #{description},gmt_modified = #{gmt_modified},tag = #{tag} where id = #{id}")
-        void update(Question question);
+        /**
+         * 动态更新
+         * @param question
+         * @return
+         */
+        @UpdateProvider(type = com.boot.example.demo.Util.Util.class,method = "updateView")
+        int updateView(Question question);
 
 }

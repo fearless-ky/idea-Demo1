@@ -61,21 +61,17 @@ public class AuthorizeController{
         if(githubUser != null){
             //登录成功
             String token = UUID.randomUUID().toString();
-            int num = numAll.size();
-            num++;
            User user = new User();
-           user.setId(num);
            user.setToken(token);
            user.setName(githubUser.getName());
            user.setAccount_id(String.valueOf(githubUser.getId()));
            user.setAvatar_url(githubUser.getAvatar_url());
            userService.CreateOrUpdate(user);
            response.addCookie(new Cookie("token",token));
-            return "redirect:/index";   //redirect  显示的一个路径 所以要加上/index 才能表示主页
+           return "redirect:/index";   //redirect  显示的一个路径 所以要加上/index 才能表示主页
         }else{
             //登录失败
-
-            return "redirect:/index";
+            return "redirect:/index";   //redirect  显示的一个路径 所以要加上/index 才能表示主页
         }
     }
 

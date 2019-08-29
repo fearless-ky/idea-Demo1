@@ -2,6 +2,7 @@ package com.boot.example.demo.Controller;
 
 import com.boot.example.demo.Mapper.UserMapper;
 import com.boot.example.demo.dto.PageactionDTO;
+import com.boot.example.demo.dto.QuestionDTO;
 import com.boot.example.demo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,6 +49,7 @@ public class IndexController{
     }*/
 
       Cookie[] cookies = request.getCookies();
+
       PageactionDTO pageactionDTO = questionService.list(page,size);
       model.addAttribute("pageactionDTO",pageactionDTO);
       return "index";

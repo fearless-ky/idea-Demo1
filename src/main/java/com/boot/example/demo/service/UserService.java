@@ -25,7 +25,6 @@ public class UserService {
             Dbuser.setName(user.getName());
             Dbuser.setToken(user.getToken());
             userMapper.update(Dbuser);
-
         }
     }
 }
